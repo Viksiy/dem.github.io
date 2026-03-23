@@ -51,54 +51,11 @@
   </ul>
     <p>
 
-
-      import pandas as pd
-import numpy as np
-
-np.random.seed(42)
-n_samples = 1000
-
-data = pd.DataFrame({
-    'age': np.random.randint(18, 75, n_samples),
-    'driving_experience': np.random.randint(0, 40, n_samples),
-    'accidents_count': np.random.poisson(0.8, n_samples),
-})
-
-# Логика принятия решения (упрощённая)
-def decide_insurance(row):
-    risk_score = (
-        0.3 * (row['age'] < 25) +
-        0.4 * (row['driving_experience'] < 3) +
-        0.3 * (row['accidents_count'] > 1)
-    )
-    return np.random.random() < (1 - risk_score)
-
-data['approved'] = data.apply(decide_insurance, axis=1)
-data.to_csv('kasko_dataset.csv', index=False)
-      from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score
-
-X = data[['age', 'driving_experience', 'accidents_count']]
-y = data['approved']
-
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
-model = RandomForestClassifier(random_state=42)
-model.fit(X_train, y_train)
-
-pred = model.predict(X_test)
-accuracy = accuracy_score(y_test, pred)  # ~0.69 при правильной настройке
-      <!DOCTYPE html>
-<html>
-<body>
-  <h1>Метрики моделей</h1>
-  <ul>
-    <li>Кредитная модель: {{ metrics.credit_model_accuracy }}</li>
-    <li>КАСКО-модель: {{ metrics.kasko_model_accuracy }}</li>
-  </ul>
-</body>
-</html>
-
+<div class="model-metrics">
+  <h3>Эффективность кредитного скоринга</h3>
+  <p>Точность модели (Accuracy):<strong>0.69 </strong></p>
+  <small>Данные актуальны на текущий квартал.</small>
+</div>
  </body> 
 </html>
 
